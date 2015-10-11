@@ -1,0 +1,5 @@
+---
+name: monkey_catch
+namespace: MonkeyCatch
+expect_coverage: 1
+ignore_subjects: []

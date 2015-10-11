@@ -1,0 +1,10 @@
+---
+dependencies:
+  pre:
+    - gem install bundler --pre
+machine:
+  ruby:
+    version: '2.2.3'
+test:
+  override:
+    - bundle exec rake ci

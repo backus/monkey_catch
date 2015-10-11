@@ -1,0 +1,4 @@
+--format documentation
+--color
+-Ilib
+-r spec_helper
