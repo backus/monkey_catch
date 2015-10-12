@@ -3,8 +3,7 @@ RSpec.describe MonkeyCatch, '.report' do
 
   around(:each) do |example|
     begin
-      stderr, $stderr = $stderr, StringIO.new
-
+      $stderr = StringIO.new
       example.run
     ensure
       $stderr = STDERR
