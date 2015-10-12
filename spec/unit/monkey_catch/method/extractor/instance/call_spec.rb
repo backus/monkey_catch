@@ -1,4 +1,4 @@
-RSpec.describe MonkeyCatch::InstanceMethodsObserver, '.call' do
+RSpec.describe MonkeyCatch::Method::Extractor::Instance, '.call' do
   subject { described_class.call(constants) }
 
   let(:klass) { Class.new { def baz; end } }

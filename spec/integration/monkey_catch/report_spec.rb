@@ -1,5 +1,5 @@
 RSpec.describe MonkeyCatch, '.report' do
-  before { stub_const('Foo', Class.new) }
+  before { stub_const('Foo', Class.new(BasicObject)) }
 
   around(:each) do |example|
     begin

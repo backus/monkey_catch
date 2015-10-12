@@ -8,9 +8,9 @@ require 'concord'
 require 'procto'
 
 require 'monkey_catch/version'
-require 'monkey_catch/instance_methods_observer'
-require 'monkey_catch/singleton_methods_observer'
 require 'monkey_catch/constant_list'
+require 'monkey_catch/method/extractor'
+require 'monkey_catch/method'
 require 'monkey_catch/diff'
 
 module MonkeyCatch
@@ -19,10 +19,10 @@ module MonkeyCatch
 
     diff.each do |meth|
       case meth
-      when InstanceMethod
-        puts "#{meth.owner}##{meth.name}"
-      when SingletonMethod
-        puts "#{meth.owner}.#{meth.name}"
+      when Method::Instance
+        puts "#{meth.klass}##{meth.name}"
+      when Method::Singleton
+        puts "#{meth.klass}.#{meth.name}"
       else
         fail 'unknown error'
       end
