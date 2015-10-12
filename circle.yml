@@ -1,10 +1,17 @@
 ---
 dependencies:
-  pre:
-    - gem install bundler --pre
+  bundler:
+    without: [guard]
 machine:
   ruby:
     version: '2.2.3'
 test:
   override:
-    - bundle exec rake ci
+    - bundle exec rake spec
+    - bundle exec rake metrics:coverage
+    - bundle exec rake metrics:yardstick:verify
+    - bundle exec rake metrics:rubocop
+    - bundle exec rake metrics:flog
+    - bundle exec rake metrics:flay
+    - bundle exec rake metrics:reek
+    - bundle exec rake metrics:mutant

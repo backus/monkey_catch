@@ -1,18 +1,26 @@
+---
+require: rubocop-rspec
 AllCops:
   Include:
-  - "**/Gemfile"
-  - "**/Guardfile"
-  - "**/Rakefile"
   - "**/*.rake"
-  - "**/*.gemspec"
+  - "**/Gemfile"
+  - "**/Rakefile"
   Exclude:
-  - "vendor/**/*"
-  - "db/**/*"
+  - vendor/**/*
+  - db/**/*
   DisplayCopNames: true
-# Disable documentation checking until a class needs to be documented once
-Documentation:
+# This ends up being too spammy
+Style/Documentation:
   Enabled: false
-StringLiterals:
+Style/TrailingWhitespace:
+  Enabled: false
+Style/TrailingBlankLines:
+  Enabled: false
+Style/ExtraSpacing:
+  Enabled: false
+Style/EachWithObject:
+  Enabled: false
+Style/StringLiterals:
   EnforcedStyle: single_quotes
 Metrics/LineLength:
   Max: 100
@@ -53,20 +61,18 @@ Style/PercentLiteralDelimiters:
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-literal-braces
   Enabled: true
   PreferredDelimiters:
-    "%": "()"
-    "%i": "()"
-    "%q": "()"
-    "%Q": "()"
-    "%r": "()"
-    "%s": "()"
-    "%w": "()"
-    "%W": "()"
-    "%x": "()"
+    '%i': '[]'
+    '%I': '[]'
+    '%q': '{}'
+    '%Q': '{}'
+    '%r': '{}'
+    '%s': ()
+    '%w': '[]'
+    '%W': '[]'
+    '%x': ()
 Style/RegexpLiteral:
-  Description: Use %r for regular expressions matching more than `MaxSlashes` '/'
-    characters. Use %r only for regular expressions matching more than `MaxSlashes`
-    '/' character.
-  StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-r
+  Description: 'Use / or %r around regular expressions.'
+  StyleGuide: 'https://github.com/bbatsov/ruby-style-guide#percent-r'
   Enabled: true
 Style/SignalException:
   Description: Checks for proper usage of fail and raise.
@@ -84,23 +90,23 @@ Style/TrivialAccessors:
   AllowDSLWriters: false
   IgnoreClassMethods: false
   Whitelist:
-    - to_ary
-    - to_a
-    - to_c
-    - to_enum
-    - to_h
-    - to_hash
-    - to_i
-    - to_int
-    - to_io
-    - to_open
-    - to_path
-    - to_proc
-    - to_r
-    - to_regexp
-    - to_str
-    - to_s
-    - to_sym
+  - to_ary
+  - to_a
+  - to_c
+  - to_enum
+  - to_h
+  - to_hash
+  - to_i
+  - to_int
+  - to_io
+  - to_open
+  - to_path
+  - to_proc
+  - to_r
+  - to_regexp
+  - to_str
+  - to_s
+  - to_sym
 Style/WordArray:
   Description: Use %w or %W for arrays of words.
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#percent-w
@@ -142,9 +148,6 @@ Style/DeprecatedHashMethods:
 Style/DoubleNegation:
   Description: Checks for uses of double negation (!!).
   StyleGuide: https://github.com/bbatsov/ruby-style-guide#no-bang-bang
-  Enabled: true
-Style/EachWithObject:
-  Description: Prefer `each_with_object` over `inject` or `reduce`.
   Enabled: true
 Style/EmptyLiteral:
   Description: Prefer literals to Array.new/Hash.new/String.new.
@@ -198,7 +201,362 @@ Lint/UnderscorePrefixedVariableName:
 Style/MultilineOperationIndentation:
   Description: Checks indentation of binary operations that span more than one line.
   Enabled: true
-  EnforcedStyle: aligned
+  EnforcedStyle: indented
   SupportedStyles:
   - aligned
   - indented
+Style/AccessModifierIndentation:
+  EnforcedStyle: indent
+  SupportedStyles:
+  - outdent
+  - indent
+Style/AlignHash:
+  EnforcedHashRocketStyle: key
+  EnforcedColonStyle: key
+  EnforcedLastArgumentHashStyle: always_inspect
+  SupportedLastArgumentHashStyles:
+  - always_inspect
+  - always_ignore
+  - ignore_implicit
+  - ignore_explicit
+Style/AlignParameters:
+  EnforcedStyle: with_first_parameter
+  SupportedStyles:
+  - with_first_parameter
+  - with_fixed_indentation
+Style/AndOr:
+  EnforcedStyle: always
+  SupportedStyles:
+  - always
+  - conditionals
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+  SupportedStyles:
+  - percent_q
+  - bare_percent
+Style/BlockDelimiters:
+  EnforcedStyle: line_count_based
+  SupportedStyles:
+  - line_count_based
+  - semantic
+  ProceduralMethods:
+  - benchmark
+  - bm
+  - bmbm
+  - create
+  - each_with_object
+  - measure
+  - new
+  - realtime
+  - tap
+  - with_object
+  FunctionalMethods:
+  - let
+  - let!
+  - subject
+  - watch
+  IgnoredMethods:
+  - lambda
+  - proc
+  - it
+Style/BracesAroundHashParameters:
+  EnforcedStyle: no_braces
+  SupportedStyles:
+  - braces
+  - no_braces
+  - context_dependent
+Style/CaseIndentation:
+  IndentWhenRelativeTo: case
+  SupportedStyles:
+  - case
+  - end
+  IndentOneStep: false
+Style/ClassAndModuleChildren:
+  EnforcedStyle: nested
+  SupportedStyles:
+  - nested
+  - compact
+Style/ClassCheck:
+  EnforcedStyle: is_a?
+  SupportedStyles:
+  - is_a?
+  - kind_of?
+Style/CollectionMethods:
+  PreferredMethods:
+    collect: map
+    collect!: map!
+    inject: reduce
+    reduce: reduce
+    detect: find
+    find:   find
+    find_all: select
+Style/CommandLiteral:
+  EnforcedStyle: backticks
+  SupportedStyles:
+  - backticks
+  - percent_x
+  - mixed
+  AllowInnerBackticks: false
+Style/Copyright:
+  Notice: "^Copyright (\\(c\\) )?2[0-9]{3} .+"
+  AutocorrectNotice: ''
+Style/EmptyElse:
+  EnforcedStyle: both
+  SupportedStyles:
+  - empty
+  - nil
+  - both
+Style/EmptyLineBetweenDefs:
+  AllowAdjacentOneLineDefs: false
+Style/EmptyLinesAroundBlockBody:
+  EnforcedStyle: no_empty_lines
+  SupportedStyles:
+  - empty_lines
+  - no_empty_lines
+Style/EmptyLinesAroundClassBody:
+  EnforcedStyle: no_empty_lines
+  SupportedStyles:
+  - empty_lines
+  - no_empty_lines
+Style/EmptyLinesAroundModuleBody:
+  EnforcedStyle: no_empty_lines
+  SupportedStyles:
+  - empty_lines
+  - no_empty_lines
+Style/Encoding:
+  EnforcedStyle: always
+  SupportedStyles:
+  - when_needed
+  - always
+  AutoCorrectEncodingComment: "# encoding: utf-8"
+Style/FirstParameterIndentation:
+  EnforcedStyle: special_for_inner_method_call_in_parentheses
+  SupportedStyles:
+  - consistent
+  - special_for_inner_method_call
+  - special_for_inner_method_call_in_parentheses
+Style/For:
+  EnforcedStyle: each
+  SupportedStyles:
+  - for
+  - each
+Style/FormatString:
+  EnforcedStyle: format
+  SupportedStyles:
+  - format
+  - sprintf
+  - percent
+Style/GuardClause:
+  MinBodyLength: 1
+Style/HashSyntax:
+  EnforcedStyle: ruby19
+  SupportedStyles:
+  - ruby19
+  - ruby19_no_mixed_keys
+  - hash_rockets
+  UseHashRocketsWithSymbolValues: false
+Style/IndentationConsistency:
+  EnforcedStyle: normal
+  SupportedStyles:
+  - normal
+  - rails
+Style/IndentationWidth:
+  Width: 2
+Style/IndentHash:
+  EnforcedStyle: special_inside_parentheses
+  SupportedStyles:
+  - special_inside_parentheses
+  - consistent
+Style/LambdaCall:
+  EnforcedStyle: call
+  SupportedStyles:
+  - call
+  - braces
+Style/NonNilCheck:
+  IncludeSemanticChanges: false
+Style/MethodDefParentheses:
+  EnforcedStyle: require_parentheses
+  SupportedStyles:
+  - require_parentheses
+  - require_no_parentheses
+Style/MethodName:
+  EnforcedStyle: snake_case
+  SupportedStyles:
+  - snake_case
+  - camelCase
+Style/OptionHash:
+  SuspiciousParamNames:
+  - options
+  - opts
+  - args
+  - params
+  - parameters
+Style/ParenthesesAroundCondition:
+  AllowSafeAssignment: true
+Style/PercentQLiterals:
+  EnforcedStyle: lower_case_q
+  SupportedStyles:
+  - lower_case_q
+  - upper_case_q
+Style/PredicateName:
+  NamePrefix:
+  - is_
+  - has_
+  - have_
+  NamePrefixBlacklist:
+  - is_
+  - has_
+  - have_
+Style/RaiseArgs:
+  EnforcedStyle: exploded
+  SupportedStyles:
+  - compact
+  - exploded
+Style/RedundantReturn:
+  AllowMultipleReturnValues: false
+Style/Semicolon:
+  AllowAsExpressionSeparator: false
+Style/SingleLineBlockParams:
+  Methods:
+  - reduce:
+    - a
+    - e
+  - inject:
+    - a
+    - e
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: single_quotes
+  SupportedStyles:
+  - single_quotes
+  - double_quotes
+Style/StringMethods:
+  PreferredMethods:
+    intern: to_sym
+Style/SpaceAroundBlockParameters:
+  EnforcedStyleInsidePipes: no_space
+  SupportedStyles:
+  - space
+  - no_space
+Style/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: space
+  SupportedStyles:
+  - space
+  - no_space
+Style/SpaceAroundOperators:
+  MultiSpaceAllowedForOperators:
+  - "="
+  - "=>"
+Style/SpaceBeforeBlockBraces:
+  EnforcedStyle: space
+  SupportedStyles:
+  - space
+  - no_space
+Style/SpaceInsideBlockBraces:
+  EnforcedStyle: space
+  SupportedStyles:
+  - space
+  - no_space
+  EnforcedStyleForEmptyBraces: no_space
+  SpaceBeforeBlockParameters: true
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: space
+  EnforcedStyleForEmptyBraces: no_space
+  SupportedStyles:
+  - space
+  - no_space
+Style/SpaceInsideStringInterpolation:
+  EnforcedStyle: no_space
+  SupportedStyles:
+  - space
+  - no_space
+Style/SymbolProc:
+  IgnoredMethods:
+  - respond_to
+Style/TrailingComma:
+  EnforcedStyleForMultiline: no_comma
+  SupportedStyles:
+  - comma
+  - consistent_comma
+  - no_comma
+Style/VariableName:
+  EnforcedStyle: snake_case
+  SupportedStyles:
+  - snake_case
+  - camelCase
+Style/WhileUntilModifier:
+  MaxLineLength: 80
+Metrics/AbcSize:
+  Max: 15
+Metrics/BlockNesting:
+  Max: 3
+Metrics/ModuleLength:
+  CountComments: false
+  Max: 100
+Metrics/CyclomaticComplexity:
+  Max: 6
+Metrics/MethodLength:
+  CountComments: false
+  Max: 10
+Metrics/ParameterLists:
+  Max: 5
+  CountKeywordArgs: true
+Metrics/PerceivedComplexity:
+  Max: 7
+Lint/AssignmentInCondition:
+  AllowSafeAssignment: true
+Lint/EndAlignment:
+  AlignWith: keyword
+  SupportedStyles:
+  - keyword
+  - variable
+  AutoCorrect: false
+Lint/DefEndAlignment:
+  AlignWith: start_of_line
+  SupportedStyles:
+  - start_of_line
+  - def
+  AutoCorrect: false
+Rails/ActionFilter:
+  EnforcedStyle: action
+  SupportedStyles:
+  - action
+  - filter
+  Include:
+  - app/controllers/**/*.rb
+Rails/Date:
+  EnforcedStyle: flexible
+  SupportedStyles:
+  - strict
+  - flexible
+Rails/DefaultScope:
+  Include:
+  - app/models/**/*.rb
+Rails/FindBy:
+  Include:
+  - app/models/**/*.rb
+Rails/FindEach:
+  Include:
+  - app/models/**/*.rb
+Rails/HasAndBelongsToMany:
+  Include:
+  - app/models/**/*.rb
+Rails/Output:
+  Include:
+  - app/**/*.rb
+  - config/**/*.rb
+  - db/**/*.rb
+  - lib/**/*.rb
+Rails/ReadWriteAttribute:
+  Include:
+  - app/models/**/*.rb
+Rails/ScopeArgs:
+  Include:
+  - app/models/**/*.rb
+Rails/TimeZone:
+  EnforcedStyle: flexible
+  SupportedStyles:
+  - strict
+  - flexible
+Rails/Validation:
+  Include:
+  - app/models/**/*.rb
