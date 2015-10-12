@@ -1,43 +1,45 @@
 module MonkeyCatch
   module Method
-    module Extractor
-      class Instance
-        include Procto.call, Concord.new(:constants)
+    class Extractor
+      include Procto.call, Concord.new(:constants, :extractor_message)
 
-        def call
-          constants_with(:instance_methods).flat_map(&method(:instance_method_objects))
-        end
+      def call
+        constants_with(names_message).flat_map(&method(:const_methods))
+      end
 
-        private
+      private
 
-        def constants_with(method_name)
-          constants.select do |const|
-            const.respond_to?(method_name)
-          end
-        end
+      def method_names(const)
+        const.send(names_message, false)
+      end
 
-        def instance_method_objects(const)
-          const.instance_methods(false).flat_map(&const.method(:instance_method))
+      def const_methods(const)
+        method_names(const).flat_map(&const.method(extractor_message))
+      end
+
+      def constants_with(method_name)
+        constants.select do |const|
+          const.respond_to?(method_name)
         end
       end
 
-      class Singleton
-        include Procto.call, Concord.new(:constants)
+      def names_message
+        :"#{extractor_message}s"
+      end
 
-        def call
-          constants_with(:methods).flat_map(&method(:method_objects))
+      class Instance < Extractor
+        MESSAGE = :instance_method
+
+        def initialize(constants)
+          super(constants, MESSAGE)
         end
+      end
 
-        private
+      class Singleton < Extractor
+        MESSAGE = :method
 
-        def constants_with(method_name)
-          constants.select do |const|
-            const.respond_to?(method_name)
-          end
-        end
-
-        def method_objects(const)
-          const.methods(false).flat_map(&const.method(:method))
+        def initialize(constants)
+          super(constants, MESSAGE)
         end
       end
     end
