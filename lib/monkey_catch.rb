@@ -20,12 +20,14 @@ module MonkeyCatch
     diff.each do |meth|
       case meth
       when Method::Instance
-        puts "#{meth.klass}##{meth.name}"
+        puts "Instance method monkey patch:  `#{meth.klass}##{meth.name}`"
       when Method::Singleton
-        puts "#{meth.klass}.#{meth.name}"
+        puts "Singleton method monkey patch: `#{meth.klass}.#{meth.name}`"
       else
         fail 'unknown error'
       end
     end
+
+    nil
   end
 end
