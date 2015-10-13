@@ -3,7 +3,7 @@ module MonkeyCatch
     extend Forwardable
 
     def self.lookup(root)
-      items = Search.search([root]).search.all
+      items = Search.search([root]).all
       new(Set.new(items.to_a))
     end
 
@@ -34,7 +34,7 @@ module MonkeyCatch
 
     class Search
       def self.search(roots)
-        new([], roots)
+        new([], roots).search
       end
 
       include Concord.new(:set), Procto.call(:search)
@@ -50,14 +50,26 @@ module MonkeyCatch
       end
 
       def unsearched_children
-        set.unsearched.flat_map do |constant|
-          next [] unless constant.respond_to?(:constants)
-          constant.constants.map do |name|
-            begin
-              constant.const_get(name)
-            rescue NameError, LoadError => error
-              warn "Could not resolve #{constant}::#{name}: #{error.message}"
-            end
+        unsearched.flat_map(&method(:search_constant))
+      end
+
+      def unsearched
+        set.unsearched.reject do |item|
+          item.equal?(Module)
+        end
+      end
+
+      def search_constant(constant)
+        return [] unless constant.respond_to?(:constants)
+
+        constant.constants.map do |name|
+          begin
+            constant.const_get(name)
+          rescue NameError, LoadError => error
+            # warn "Could not resolve #{constant}::#{name}: #{error.message}"
+          rescue ArgumentError => error
+            next if /unknown command '.'\z/.match(error.message) || (/wrong number of arguments \(1 for 2\)/.match(error.message) && /`test'\z/.match(error.backtrace.first))
+            raise(error)
           end
         end
       end
