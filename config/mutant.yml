@@ -1,5 +1,6 @@
 ---
 name: monkey_catch
 namespace: MonkeyCatch
+since: HEAD~1
 expect_coverage: 1
 ignore_subjects: []

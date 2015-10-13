@@ -29,6 +29,11 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r(^bin/)) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
+  spec.add_runtime_dependency 'procto',     '~> 0.0.2'
+  spec.add_runtime_dependency 'concord',    '~> 0.1.5'
+  spec.add_runtime_dependency 'anima',      '~> 0.3.0'
+  spec.add_runtime_dependency 'adamantium', '~> 0.2.0'
+
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'pry', '~> 0.10'

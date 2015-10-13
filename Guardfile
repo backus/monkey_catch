@@ -1,6 +1,7 @@
 require 'guard'
 
 ignore(/tmp/, /doc/)
+clearing(:on)
 
 guard :bundler do
   watch('Gemfile')
@@ -59,8 +60,14 @@ group :critique do
   end
 end
 
+RSPEC = {
+  cmd: 'bundle exec rspec --no-profile',
+  all_after_pass: true,
+  spec_paths: %w[spec/unit]
+}
+
 # RSpec is often the longest running guard so we put it at the end
-guard :rspec, cmd: 'bundle exec rspec --no-profile' do
+guard :rspec, RSPEC do
   watch(%r{lib/(.*)\.rb\z}) { |m| Dir["spec/unit/#{m[1]}{,/**/*}_spec.rb"] }
   watch(%r{(spec/.*\.rb)\z}) { |m| m[0] }
 end
