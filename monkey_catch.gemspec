@@ -25,8 +25,8 @@ Gem::Specification.new do |spec|
     file.match(%r{^(test|spec|features)/})
   end
 
-  spec.bindir        = 'bin'
-  spec.executables   = spec.files.grep(%r(^bin/)) { |f| File.basename(f) }
+  spec.bindir        = 'exe'
+  spec.executables   = spec.files.grep(%r(^exe/)) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'procto',     '~> 0.0.2'
