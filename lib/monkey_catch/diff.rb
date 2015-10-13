@@ -3,7 +3,7 @@ module MonkeyCatch
     include Concord.new(:context, :constants), Procto.call(:compare)
 
     def initialize(context)
-      constants = ConstantList.lookup(Object)
+      constants = ConstantList.lookup(BasicObject)
       super(context, constants)
     end
 
