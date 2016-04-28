@@ -3,7 +3,7 @@
 Catch monkey patching!
 
 ```ruby
-MonkeyCatch.call do
+MonkeyCatch.report do
   class String
     def monkey_business
       puts 'woah!'
@@ -11,5 +11,5 @@ MonkeyCatch.call do
   end
 end
 
-# => MonkeyCatch::MonkeyPatch: class `String` monkey patched with #monkey_business
+# => Instance method monkey patch:  `String#monkey_business`
 ```
