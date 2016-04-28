@@ -4,7 +4,6 @@ module MonkeyCatch
       type = case meth
              when ::Method then Singleton
              when UnboundMethod then Instance
-             else fail "unexpected type #{meth.class}"
              end
 
       path, lineno = meth.source_location || ['No location', -1]

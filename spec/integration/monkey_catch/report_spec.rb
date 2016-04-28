@@ -11,12 +11,16 @@ RSpec.describe MonkeyCatch, '.report' do
   end
 
   context 'non-core constant defined before report' do
-    let(:report) { "Instance method monkey patch:  `Foo#bar`\n" }
+    let(:report) do
+      "Instance method monkey patch:  `Foo#bar`\n" \
+      "Singleton method monkey patch: `Foo.baz`\n"
+    end
 
     it 'detects new instance method' do
       expect do
         described_class.report do
           class Foo
+            def self.baz; end
             def bar; end
           end
         end
@@ -25,18 +29,29 @@ RSpec.describe MonkeyCatch, '.report' do
   end
 
   context 'core method defined on Object' do
-    let(:report) { "Instance method monkey patch:  `Object#method_missing`\n" }
+    let(:report) { "Instance method monkey patch:  `Object#==`\n" }
 
-    it 'Object.method_missing' do
+    it 'Object#==' do
       expect do
         described_class.report do
           class Object
-            def method_missing(*args, &blk)
-              super(*args, &blk)
+            def ==(*)
+              super
             end
           end
         end
       end.to output(report).to_stdout
+    end
+  end
+
+  context 'when module is included in kernel scope' do
+    let(:file) { Pathname(__FILE__).join('../../../shared/examples/include_example.rb') }
+    it 'detects monkey patch' do
+      expect do
+        described_class.report do
+          load(file)
+        end
+      end.to output('').to_stdout
     end
   end
 end

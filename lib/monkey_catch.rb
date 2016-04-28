@@ -23,11 +23,7 @@ module MonkeyCatch
         puts "Instance method monkey patch:  `#{meth.klass}##{meth.name}`"
       when Method::Singleton
         puts "Singleton method monkey patch: `#{meth.klass}.#{meth.name}`"
-      else
-        fail 'unknown error'
       end
     end
-
-    nil
   end
 end

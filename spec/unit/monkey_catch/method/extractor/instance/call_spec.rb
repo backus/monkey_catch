@@ -1,11 +1,17 @@
 RSpec.describe MonkeyCatch::Method::Extractor::Instance, '.call' do
   subject { described_class.call(constants) }
 
-  let(:klass) { Class.new { def baz; end } }
+  class BlankSlate < BasicObject
+    [:==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__].map do |meth|
+      undef_method(meth)
+    end
+  end
+
+  let(:klass) { Class.new(BlankSlate) { def baz; end } }
 
   # Fake version of `::Object`
   class FakeObject
-    class String
+    class String < BlankSlate
     end
 
     NIL = ::NIL
@@ -35,7 +41,7 @@ RSpec.describe MonkeyCatch::Method::Extractor::Instance, '.call' do
     before do
       stub_const('FakeObject::Foo::Bar', klass)
       allow(FakeObject::Foo::Bar).to receive(:constants).and_return([])
-      allow(FakeObject::Foo::Bar).to receive(:instance_methods).with(false).and_return([:baz])
+      allow(FakeObject::Foo::Bar).to receive(:instance_methods).and_return([:baz])
     end
 
     it { should eql([FakeObject::Foo::Bar.instance_method(:baz)]) }

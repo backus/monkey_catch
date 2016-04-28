@@ -10,7 +10,7 @@ module MonkeyCatch
       private
 
       def method_names(const)
-        const.send(names_message, false)
+        const.send(names_message)
       end
 
       def const_methods(const)

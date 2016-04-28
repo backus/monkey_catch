@@ -19,16 +19,8 @@ module MonkeyCatch
       end
       memoize :unsearched
 
-      def add(root, nested)
-        self.class.new(expanded + root, all + nested)
-      end
-
       def exhausted?
         unsearched.empty?
-      end
-
-      def searched?(item)
-        expanded.include?(item)
       end
     end
 
@@ -67,9 +59,6 @@ module MonkeyCatch
             constant.const_get(name)
           rescue NameError, LoadError => error
             # warn "Could not resolve #{constant}::#{name}: #{error.message}"
-          rescue ArgumentError => error
-            next if /unknown command '.'\z/.match(error.message) || (/wrong number of arguments \(1 for 2\)/.match(error.message) && /`test'\z/.match(error.backtrace.first))
-            raise(error)
           end
         end
       end
